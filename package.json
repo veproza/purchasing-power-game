@@ -19,6 +19,7 @@
   "author": "k1r0s",
   "license": "MIT",
   "dependencies": {
+    "bootstrap": "^4.1.1",
     "preact": "~8.2.6"
   },
   "devDependencies": {
