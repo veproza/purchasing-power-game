@@ -32,5 +32,6 @@ module.exports = {
   },
   devServer: {
     port: 4200
-  }
+  },
+  externals: [require('webpack-node-externals')()]
 };

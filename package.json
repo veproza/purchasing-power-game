@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack",
     "prod": "webpack -p",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require ts-node/register test/unit/**/*.test.ts --recursive --forbid-only --forbid-pending",
+    "test-watch": "mocha-webpack test/unit/**/*.test.ts --watch",
     "dev": "webpack-dev-server --inline --hot --progress --open --content-base public"
   },
   "keywords": [
@@ -23,15 +24,23 @@
     "preact": "~8.2.6"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.3",
+    "@types/mocha": "^5.2.0",
     "awesome-typescript-loader": "~3.2.3",
-    "webpack": "~3.8.1",
-    "webpack-dev-server": "~2.9.3",
+    "chai": "^4.1.2",
+    "css-loader": "^0.28.7",
+    "mocha": "^5.2.0",
+    "mocha-webpack": "^1.1.0",
     "node-sass": "^4.7.2",
+    "nyc": "^11.8.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
-    "css-loader": "^0.28.7",
+    "ts-node": "^6.0.5",
     "tslint": "^5.10.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^2.8.3"
+    "typescript": "^2.8.3",
+    "webpack": "~3.8.1",
+    "webpack-dev-server": "~2.9.3",
+    "webpack-node-externals": "^1.7.2"
   }
 }
