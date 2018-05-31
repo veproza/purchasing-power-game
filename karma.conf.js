@@ -21,7 +21,7 @@ module.exports = function (config) {
     basePath: '',
     browsers: ['Chrome'],
     frameworks: ['mocha'],
-    reporters: ['progress', 'mocha'],
+    reporters: ['mocha'],
     files: [
       'test/**/*.test.ts',
       'test/**/*.test.tsx'
