@@ -10,3 +10,7 @@ yarn-error.log*
 
 .idea
 .nyc_output
+
+/public/*
+!/public/index.html
+!/public/perms.json
