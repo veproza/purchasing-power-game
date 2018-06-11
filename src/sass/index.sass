@@ -5,3 +5,15 @@ body
 canvas
   background: white
   border: 1px solid #ccc
+
+.flip-container
+  perspective: 1000px
+  svg
+    transition: 0.6s
+    transform-style: preserve-3d
+    position: relative
+    max-width: 100%
+    max-height: 100%
+    transform: rotateY(180deg)
+  &.flip svg
+    transform: rotateY(0deg)
