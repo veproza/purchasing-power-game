@@ -3,24 +3,19 @@ import EventHub from '../modules/EventHub';
 import { default as MotionSource, IMotionEvents, TurnDirection } from '../modules/MotionSource';
 import Arrow from './Arrow';
 
-const motionSource = new MotionSource();
-
-export default () => (
-  <div>
-    <TurnDebugger eventHub={motionSource.events}/>
-  </div>
-);
 type TProps = {
-  eventHub: EventHub<IMotionEvents>;
+
 };
 type TState = {
   turnDirection: TurnDirection,
   turnProgress: number
 };
-
-class TurnDebugger extends Component<TProps, TState> {
+export default class Main extends Component<TProps, TState> {
+  eventHub: EventHub<IMotionEvents>;
   constructor() {
     super();
+    const motionSource = new MotionSource();
+    this.eventHub = motionSource.events;
     this.state = {
       turnDirection: TurnDirection.Right,
       turnProgress: 0
@@ -28,17 +23,15 @@ class TurnDebugger extends Component<TProps, TState> {
   }
 
   componentDidMount() {
-    this.props.eventHub.subscribe('turnProgress', (progress) => {
+    this.eventHub.subscribe('turnProgress', (progress) => {
       this.setState({turnProgress: Math.round(progress * 100)});
     });
-    this.props.eventHub.subscribe('turnDirectionChange', (turnDirection) => this.setState({turnDirection}));
+    this.eventHub.subscribe('turnDirectionChange', (turnDirection) => this.setState({turnDirection}));
   }
 
   render() {
     return (
       <span>
-        {this.state.turnDirection}
-        <br/>
         {this.state.turnProgress.toString()}
         <Arrow direction={this.state.turnDirection}/>
       </span>
