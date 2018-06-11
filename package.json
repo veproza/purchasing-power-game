@@ -9,7 +9,7 @@
     "test": "karma start",
     "test:cover": "npm run test && npm run ts-coverage-remap",
     "test:debug": "set NODE_ENV=debug && karma start",
-    "dev": "webpack-dev-server --inline --hot --progress --open --content-base public",
+    "dev": "webpack-dev-server --inline --hot --progress --open --content-base public --host 0.0.0.0",
     "ts-coverage-remap": "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html-ts -t html"
   },
   "keywords": [
