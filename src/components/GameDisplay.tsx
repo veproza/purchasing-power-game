@@ -16,20 +16,20 @@ type TProps = {
 };
 
 function makeArrow(props: TProps) {
-    return (
-        <Arrow
-            direction={props.turnDirection}
-            fillPercentage={props.currentFillPercentage}
-        />
-    );
+  return (
+    <Arrow
+      direction={props.turnDirection}
+      fillPercentage={props.currentFillPercentage}
+    />
+  );
 }
 
 function makeImage() {
-    return (
-      <div className="wrench-container">
-            <img id="wrench" src="/img/wrenching.gif" />
-      </div>
-    );
+  return (
+    <div className="wrench-container">
+      <img id="wrench" src="/img/wrenching.gif"/>
+    </div>
+  );
 }
 
 export default (props: TProps) => {
@@ -54,7 +54,7 @@ export default (props: TProps) => {
         {props.currentTurnRate === 0 ? makeImage() : null}
       </div>
       <div className="simulated-turn">
-          <button className="btn btn-outline-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
+        <button className="btn btn-outline-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
       </div>
     </div>
   );
