@@ -105,6 +105,15 @@ export default class Main extends Component<TProps, TState> {
     }
   }
 
+  @bind
+  onSimulatedTurn() {
+    this.stopListeningToTurns();
+    const newTurnDirection = this.state.turnDirection === TurnDirection.Left
+      ? TurnDirection.Right
+      : TurnDirection.Left;
+    this.onTurnDirectionChange(newTurnDirection);
+  }
+
   private renderGamePage() {
     return (
       <GameDisplay
@@ -112,6 +121,7 @@ export default class Main extends Component<TProps, TState> {
         currentTurnRate={this.state.currentTurnRate}
         currentFillPercentage={this.state.turnProgress}
         referenceRate={this.state.referenceTurnRate}
+        onSimulatedTurn={this.onSimulatedTurn}
       />);
   }
 

@@ -9,6 +9,7 @@ type TProps = {
   referenceRate: number | null;
   turnDirection: TurnDirection;
   currentFillPercentage: number;
+  onSimulatedTurn: () => void;
 };
 const referenceCountry = countries[1];
 export default (props: TProps) => {
@@ -22,10 +23,14 @@ export default (props: TProps) => {
         />
         : null}
       <Score currentScore={0} maximumScore={10} />
+      <div className="text-area"/>
       <Arrow
         direction={props.turnDirection}
         fillPercentage={props.currentFillPercentage}
       />
+      <div className="simulated-turn">
+        <button className="btn btn-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
+      </div>
     </div>
   );
 };
