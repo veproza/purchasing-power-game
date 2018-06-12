@@ -26,6 +26,7 @@ export default (props: TProps) => {
         direction={props.turnDirection}
         fillPercentage={props.currentFillPercentage}
       />
+
     </div>
   );
 };

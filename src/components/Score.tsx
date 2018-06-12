@@ -40,7 +40,6 @@ export default class Score extends Component<{ currentScore: number, maximumScor
                 <div class="score-wrapper">
                     {this.addScoreBoxes()}
                 </div>
-                <button onClick={this.addScore.bind(this, 2)}>Add 2 Scorepoints (debug)</button>
             </div>);
     }
 }
