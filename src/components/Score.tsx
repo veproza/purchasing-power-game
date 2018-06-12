@@ -1,20 +1,17 @@
 import { Component, h } from 'preact';
-import bind from 'bind-decorator';
 
 type ScoreState = {
     currentScore: number;
 };
-
-export default class Score extends Component<{ currentScore: number, maximumScore: number }, ScoreState> {
+type ScoreProps = {
+  currentScore: number,
+  maximumScore: number
+};
+export default class Score extends Component<ScoreProps, ScoreState> {
 
     constructor() {
         super();
         this.state = {currentScore: 0};
-    }
-
-    @bind
-    addScore(scorePoints: number) {
-        this.setState({currentScore: this.state.currentScore + scorePoints});
     }
 
     addScoreBoxes() {
@@ -33,6 +30,10 @@ export default class Score extends Component<{ currentScore: number, maximumScor
         return scoreBoxes;
     }
 
+    componentWillReceiveProps(newProps: ScoreProps) {
+        this.setState({currentScore: newProps.currentScore});
+    }
+
     render() {
         return (
             <div>
@@ -40,6 +41,7 @@ export default class Score extends Component<{ currentScore: number, maximumScor
                 <div class="score-wrapper">
                     {this.addScoreBoxes()}
                 </div>
-            </div>);
+            </div>
+        );
     }
 }

@@ -22,7 +22,7 @@ export default (props: TProps) => {
           referenceCountry={referenceCountry}
         />
         : null}
-      <Score currentScore={0} maximumScore={10} />
+      <Score currentScore={props.currentTurnRate || 0} maximumScore={10}/>
       <div className="text-area"/>
       <Arrow
         direction={props.turnDirection}
