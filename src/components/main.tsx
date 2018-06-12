@@ -28,7 +28,6 @@ export enum PageStates {
 }
 export default class Main extends Component<TProps, TState> {
   eventHub: EventHub<IMotionEvents>;
-  turnCount: number;
   isListeningToTurns: boolean = false;
   turnsForReferenceScreen = 10;
   constructor() {
@@ -38,12 +37,11 @@ export default class Main extends Component<TProps, TState> {
     this.state = {
       turnDirection: TurnDirection.Right,
       turnProgress: 0,
-      currentTurnScore: null,
-      referenceTurnScore: null,
-      currentPageState: PageStates.WelcomePage,
+      currentTurnScore: 12,
+      referenceTurnScore: 10,
+      currentPageState: PageStates.GamePage,
       referenceCountry: countries[0]
     };
-    this.turnCount = 0;
   }
 
   componentDidMount() {
@@ -101,15 +99,14 @@ export default class Main extends Component<TProps, TState> {
   @bind
   onTurnDirectionChange(turnDirection: TurnDirection) {
     this.setState({turnDirection});
-    this.turnCount++;
+    const newTurnCount = (this.state.currentTurnScore || 0) + 1;
     const isRateGatheringPage = this.state.currentPageState === PageStates.RateGatheringPage;
-    const gatheredEnoughData = this.turnCount >= this.turnsForReferenceScreen;
+    const gatheredEnoughData = newTurnCount >= this.turnsForReferenceScreen;
     if (isRateGatheringPage && gatheredEnoughData) {
-      this.setState({referenceTurnScore: this.turnCount, currentTurnScore: 0});
-      this.turnCount = 0;
+      this.setState({referenceTurnScore: this.state.currentTurnScore, currentTurnScore: 0});
       this.setNextPage();
     } else {
-      this.setState({currentTurnScore: this.turnCount});
+      this.setState({currentTurnScore: newTurnCount});
     }
   }
 
