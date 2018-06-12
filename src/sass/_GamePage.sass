@@ -6,11 +6,20 @@
   padding: $padding-y $padding-x
   background: $primaryColor
   .text-area
-    flex-grow: 1
     color: white
+  .wrench-arrow
+    position: relative
+    flex-grow: 1
+  .arrow-container,
+  .wrench-container
+    position: absolute
+    top: 0
+    left: 0
   .arrow-container
     perspective: 1000px
     width: 100%
+    top: auto
+    bottom: 0
     height: 70vmin
     text-align: center
     //transform: rotate(35deg)

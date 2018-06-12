@@ -26,9 +26,9 @@ function makeArrow(props: TProps) {
 
 function makeImage() {
     return (
-        <p>
+      <div className="wrench-container">
             <img id="wrench" src="/img/wrenching.gif" />
-        </p>
+      </div>
     );
 }
 
@@ -49,7 +49,10 @@ export default (props: TProps) => {
           : null}
         {props.page === PageStates.GamePage ? getGameText() : null}
       </div>
-      {props.currentTurnRate !== 0 ? makeArrow(props) : makeImage()}
+      <div className="wrench-arrow">
+        {makeArrow(props)}
+        {props.currentTurnRate === 0 ? makeImage() : null}
+      </div>
       <div className="simulated-turn">
           <button className="btn btn-outline-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
       </div>
