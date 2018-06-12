@@ -15,7 +15,7 @@ const referenceCountry = countries[1];
 export default (props: TProps) => {
   return (
     <div className="game-page">
-      {props.currentTurnRate && props.referenceRate
+      {props.currentTurnRate !== null && props.referenceRate
         ? <CurrentRateIndicator
           ratePerSecond={props.currentTurnRate}
           referenceRate={props.referenceRate}
