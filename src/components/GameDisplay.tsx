@@ -15,28 +15,42 @@ type TProps = {
   page: PageStates;
 };
 
+function makeArrow(props: TProps) {
+    return (
+        <Arrow
+            direction={props.turnDirection}
+            fillPercentage={props.currentFillPercentage}
+        />
+    );
+}
+
+function makeImage() {
+    return (
+        <p>
+            <img id="wrench" src="/img/wrenching.gif" />
+        </p>
+    );
+}
+
 export default (props: TProps) => {
   return (
     <div className="game-page">
-      {props.currentTurnRate !== null && props.referenceRate
-        ? <CurrentRateIndicator
-          ratePerSecond={props.currentTurnRate}
-          referenceRate={props.referenceRate}
-          referenceCountry={props.referenceCountry}
-        />
-        : null}
-      <Score currentScore={props.currentTurnRate || 0} maximumScore={10}/>
-      <div className="text-area">
-        {props.page === PageStates.RateGatheringPage ? getRateText(props.referenceCountry) : null}
-        {props.page === PageStates.GamePage ? getGameText() : null}
-      </div>
-      <Arrow
-        direction={props.turnDirection}
-        fillPercentage={props.currentFillPercentage}
-      />
-      <div className="simulated-turn">
-        <button className="btn btn-outline-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
-      </div>
+        {props.currentTurnRate !== null && props.referenceRate
+            ? <CurrentRateIndicator
+                ratePerSecond={props.currentTurnRate}
+                referenceRate={props.referenceRate}
+                referenceCountry={props.referenceCountry}
+            />
+            : null}
+        <Score currentScore={props.currentTurnRate || 0} maximumScore={10}/>
+        <div className="text-area">
+            {props.page === PageStates.RateGatheringPage ? getRateText(props.referenceCountry) : null}
+            {props.page === PageStates.GamePage ? getGameText() : null}
+        </div>
+        {props.currentTurnRate !== 0 ? makeArrow(props) : makeImage()}
+        <div className="simulated-turn">
+            <button className="btn btn-outline-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
+        </div>
     </div>
   );
 };

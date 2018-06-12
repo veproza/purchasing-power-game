@@ -57,6 +57,9 @@ const renderWelcome = (currentCountry: Country, onCountrySelected: (country: Cou
         Imagine the phone you are holding is a wrench and you are medium skilled construction worker.
       </p>
       <p>
+          <img id="phone" src="/img/phonewrench.png" />
+      </p>
+      <p>
         Now, try to tighten some bolts by turning your phone like a wrench!
       </p>
       <b>
