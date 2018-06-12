@@ -3,6 +3,7 @@ import bind from 'bind-decorator';
 import EventHub from '../modules/EventHub';
 import { default as MotionSource, IMotionEvents, TurnDirection } from '../modules/MotionSource';
 import GameDisplay from './GameDisplay';
+import ContentPage from './ContentPage';
 
 type TProps = {
 
@@ -10,12 +11,23 @@ type TProps = {
 type TState = {
   turnDirection: TurnDirection,
   turnProgress: number,
-  currentTurnRate: number | null
+  currentTurnRate: number | null,
+  currentPageState: PageStates;
 };
+
+export enum PageStates {
+  // noinspection JSUnusedGlobalSymbols
+  WelcomePage = 0,
+  RateGatheringPage = 1,
+  DescriptionPage = 2,
+  GamePage = 3,
+  PostGamePage = 4
+}
 export default class Main extends Component<TProps, TState> {
   eventHub: EventHub<IMotionEvents>;
   turnEvents: number[];
   rollingAverageHalfTurnCount = 4;
+  isListeningToTurns: boolean = false;
   constructor() {
     super();
     const motionSource = new MotionSource();
@@ -23,7 +35,8 @@ export default class Main extends Component<TProps, TState> {
     this.state = {
       turnDirection: TurnDirection.Right,
       turnProgress: 0,
-      currentTurnRate: null
+      currentTurnRate: null,
+      currentPageState: PageStates.WelcomePage
     };
     this.turnEvents = [];
   }
@@ -33,19 +46,46 @@ export default class Main extends Component<TProps, TState> {
   }
 
   startListeningToTurns() {
+    if (this.isListeningToTurns) {
+      return;
+    }
     this.eventHub.subscribe('turnProgress', this.onTurnProgress);
     this.eventHub.subscribe('turnDirectionChange', this.onTurnDirectionChange);
+    this.isListeningToTurns = true;
+  }
+
+  stopListeningToTurns() {
+    if (!this.isListeningToTurns) {
+      return;
+    }
+    this.eventHub.unsubscribe('turnProgress', this.onTurnProgress);
+    this.eventHub.unsubscribe('turnDirectionChange', this.onTurnDirectionChange);
+    this.isListeningToTurns = false;
   }
 
   render() {
     return (
       <span>
-        <GameDisplay
-          turnDirection={this.state.turnDirection}
-          currentTurnRate={this.state.currentTurnRate}
-        />
+        {this.isGamePage() ? this.renderGamePage() : this.renderContentPage()}
       </span>
     );
+  }
+
+  @bind
+  setNextPage() {
+    if (!this.isGamePage()) {
+      this.setState({
+        currentTurnRate: null,
+        turnProgress: 0
+      });
+      this.startListeningToTurns();
+    } else {
+      this.stopListeningToTurns();
+    }
+    const nextPageState = this.state.currentPageState + 1;
+    this.setState({
+      currentPageState: nextPageState
+    });
   }
 
   @bind
@@ -57,6 +97,27 @@ export default class Main extends Component<TProps, TState> {
   onTurnDirectionChange(turnDirection: TurnDirection) {
     this.setState({turnDirection});
     this.computeAverageTurningRate();
+  }
+
+  private renderGamePage() {
+    return (
+      <GameDisplay
+        turnDirection={this.state.turnDirection}
+        currentTurnRate={this.state.currentTurnRate}
+      />);
+  }
+
+  private renderContentPage() {
+    return (
+      <ContentPage
+        page={this.state.currentPageState}
+        onNextClicked={this.setNextPage}
+      />
+    );
+  }
+
+  private isGamePage() {
+    return [PageStates.GamePage, PageStates.RateGatheringPage].includes(this.state.currentPageState);
   }
 
   private computeAverageTurningRate() {
