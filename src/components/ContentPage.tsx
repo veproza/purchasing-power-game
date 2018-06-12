@@ -63,21 +63,26 @@ const renderWelcome = (currentCountry: Country, onCountrySelected: (country: Cou
         Which country would you like to compare to?
       </b>
       <div className="country-selector">
-        {availableCountries.map((country, index) => {
-          const className = country === currentCountry ? 'active' : '';
-          return (
-            <button
-              className={className}
-              key={index}
-              onClick={() => onCountrySelected(country)}
-            >
-              <img src={country.flag} alt={country.name}/>
-              <span className="name">
-                  {country.name}
-                </span>
-            </button>
-          );
-        })}
+        <div className="flags">
+          {availableCountries.map((country, index) => {
+            const className = country === currentCountry ? 'active' : '';
+            return (
+              <button
+                className={className}
+                key={index}
+                onClick={() => onCountrySelected(country)}
+              >
+                <img src={country.flag} alt={country.name}/>
+                <span className="name">
+                    {country.name}
+                  </span>
+              </button>
+            );
+          })}
+        </div>
+        <span className="selected-name">
+          {currentCountry.name}
+          </span>
       </div>
     </div>
   );
