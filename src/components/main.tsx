@@ -1,4 +1,5 @@
 import { Component, h } from 'preact';
+import bind from 'bind-decorator';
 import EventHub from '../modules/EventHub';
 import { default as MotionSource, IMotionEvents, TurnDirection } from '../modules/MotionSource';
 import Arrow from './Arrow';
@@ -29,19 +30,8 @@ export default class Main extends Component<TProps, TState> {
   }
 
   componentDidMount() {
-    this.eventHub.subscribe('turnProgress', (progress) => {
-      this.setState({turnProgress: Math.round(progress * 100)});
-    });
-    this.eventHub.subscribe('turnDirectionChange', (turnDirection) => this.setState({turnDirection}));
-    this.eventHub.subscribe('turnDirectionChange', () => {
-      this.turnEvents.push(Date.now());
-      if (this.turnEvents.length > this.rollingAverageHalfTurnCount) {
-        const relevantTimestamp = this.turnEvents[this.turnEvents.length - this.rollingAverageHalfTurnCount];
-        const timeTaken = (Date.now() - relevantTimestamp) / 1000;
-        const averageTime = this.rollingAverageHalfTurnCount / timeTaken;
-        this.setState({currentTurnRate: averageTime});
-      }
-    });
+    this.eventHub.subscribe('turnProgress', this.onTurnProgress);
+    this.eventHub.subscribe('turnDirectionChange', this.onTurnDirectionChange);
   }
 
   render() {
@@ -51,5 +41,26 @@ export default class Main extends Component<TProps, TState> {
         <Arrow direction={this.state.turnDirection}/>
       </span>
     );
+  }
+
+  @bind
+  onTurnProgress(progress: number) {
+    this.setState({turnProgress: Math.round(progress * 100)});
+  }
+
+  @bind
+  onTurnDirectionChange(turnDirection: TurnDirection) {
+    this.setState({turnDirection});
+    this.computeAverageTurningRate();
+  }
+
+  private computeAverageTurningRate() {
+    this.turnEvents.push(Date.now());
+    if (this.turnEvents.length > this.rollingAverageHalfTurnCount) {
+      const relevantTimestamp = this.turnEvents[this.turnEvents.length - this.rollingAverageHalfTurnCount];
+      const timeTaken = (Date.now() - relevantTimestamp) / 1000;
+      const averageTime = this.rollingAverageHalfTurnCount / timeTaken;
+      this.setState({currentTurnRate: averageTime});
+    }
   }
 }
