@@ -6,18 +6,43 @@ type TProps = {
   onNextClicked: () => void;
 };
 export default ({page, onNextClicked}: TProps) => {
-  const content = page === PageStates.WelcomePage
-    ? renderWelcome()
-    : page === PageStates.DescriptionPage
-      ? renderDescription()
-      : renderPostGame();
+  let content: JSX.Element;
+  let nextButtonText: string | null;
+  switch (page) {
+    case PageStates.WelcomePage:
+      content = renderWelcome();
+      nextButtonText = `Try some turnin‘!`;
+      break;
+    case PageStates.DescriptionPage:
+      content = renderDescription();
+      nextButtonText = `Let's see how hard it is...`;
+      break;
+    case PageStates.RateGatheringPage:
+      content = renderPostGame();
+      nextButtonText = null;
+      break;
+    default:
+      throw new Error(`Unknown page: ${page}`);
+  }
   return (
     <div className="page">
-      {content}
-      <button onClick={onNextClicked}>Next</button>
+      <div className="content">
+        {content}
+      </div>
+      {nextButtonText ? renderNextButton(onNextClicked, nextButtonText) : null}
     </div>
   );
 };
+let renderNextButton = function (onNextClicked: () => void, nextButtonText: string) {
+  return (
+    <div className="bottom">
+      <button className="btn btn-primary btn-block" onClick={onNextClicked}>
+        {nextButtonText}
+      </button>
+    </div>
+  );
+};
+
 const renderWelcome = () => {
   return (
     <div>
