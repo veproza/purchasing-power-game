@@ -14,5 +14,7 @@ yarn-error.log*
 /public/*
 !/public/index.html
 !/public/perms.json
+!/public/img
+!/public/img/*
 
 /coverage
