@@ -35,32 +35,43 @@ function makeImage() {
 export default (props: TProps) => {
   return (
     <div className="game-page">
-        {props.currentTurnRate !== null && props.referenceRate
-            ? <CurrentRateIndicator
-                ratePerSecond={props.currentTurnRate}
-                referenceRate={props.referenceRate}
-                referenceCountry={props.referenceCountry}
-            />
-            : null}
-        <Score currentScore={props.currentTurnRate || 0} maximumScore={10}/>
-        <div className="text-area">
-            {props.page === PageStates.RateGatheringPage ? getRateText(props.referenceCountry) : null}
-            {props.page === PageStates.GamePage ? getGameText() : null}
-        </div>
-        {props.currentTurnRate !== 0 ? makeArrow(props) : makeImage()}
-        <div className="simulated-turn">
-            <button className="btn btn-outline-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
-        </div>
+      {props.currentTurnRate !== null && props.referenceRate
+        ? <CurrentRateIndicator
+          ratePerSecond={props.currentTurnRate}
+          referenceRate={props.referenceRate}
+          referenceCountry={props.referenceCountry}
+        />
+        : null}
+      <Score currentScore={props.currentTurnRate || 0} maximumScore={10}/>
+      <div className="text-area">
+        {props.page === PageStates.RateGatheringPage
+          ? getRateText(props.referenceCountry, props.currentTurnRate)
+          : null}
+        {props.page === PageStates.GamePage ? getGameText() : null}
+      </div>
+      {props.currentTurnRate !== 0 ? makeArrow(props) : makeImage()}
+      <div className="simulated-turn">
+          <button className="btn btn-outline-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
+      </div>
     </div>
   );
 };
-const getRateText = (referenceCountry: Country) => {
-  return (
-    <div className="text-area">
-      Let's say that to earn enough to buy a pretzel in {referenceCountry.name}, you have to turn the wrench 10 times.
-      So start turning!
-    </div>
-  );
+const getRateText = (referenceCountry: Country, score: number | null) => {
+  const targetScore = 10;
+  if (score && score > 1) {
+    return (
+      <div className="text-area">
+        You've turned <strong>{score}</strong> nuts. Turn {targetScore - score} more for your pretzel!
+      </div>
+    );
+  } else {
+    return (
+      <div className="text-area">
+        Let's say that to earn enough to buy a pretzel in {referenceCountry.name}, you have to turn the wrench 10 times.
+        So start turning!
+      </div>
+    );
+  }
 };
 const getGameText = () => {
   return (
