@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { TurnDirection } from '../modules/MotionSource';
 import CurrentRateIndicator, { countries } from './CurrentRateIndicator';
 import Arrow from './Arrow';
+import Score from './Score';
 
 type TProps = {
   currentTurnRate: number | null;
@@ -20,10 +21,12 @@ export default (props: TProps) => {
           referenceCountry={referenceCountry}
         />
         : null}
+      <Score currentScore={0} maximumScore={10} />
       <Arrow
         direction={props.turnDirection}
         fillPercentage={props.currentFillPercentage}
       />
+
     </div>
   );
 };
