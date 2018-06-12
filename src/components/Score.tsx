@@ -30,12 +30,12 @@ export default class Score extends Component<ScoreProps, ScoreState> {
       classes.push('score-4');
     } else if (this.props.currentScore > 20) {
       classes.push('score-2');
+    } else if (this.props.currentScore < this.props.maximumScore) {
+      classes.push('fit');
     }
     return (
-      <div>
-        <div className={classes.join(' ')}>
-          {this.addScoreBoxes()}
-        </div>
+      <div className={classes.join(' ')}>
+        {this.addScoreBoxes()}
       </div>
     );
   }
