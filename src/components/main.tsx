@@ -76,6 +76,7 @@ export default class Main extends Component<TProps, TState> {
 
   @bind
   setNextPage() {
+    document.body.scrollTop = 0;
     if (!this.isGamePage()) {
       this.setState({
         currentTurnScore: 0,
