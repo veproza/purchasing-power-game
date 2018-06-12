@@ -93,6 +93,7 @@ const renderWelcome = (currentCountry: Country, onCountrySelected: (country: Cou
 const renderDescription = (referenceCountry: Country) => {
   return (
     <div>
+      <div className="pretzel-overlay"/>
       <h1>Good job!</h1>
       <p>
         By turning the key 10 times, you just made <strong>1€</strong>.

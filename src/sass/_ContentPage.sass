@@ -1,3 +1,16 @@
+@keyframes fade-in
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+@keyframes fade-out
+  from
+    top: 0
+    bottom: 0
+  to
+    top: -140%
+    bottom: 140%
 .page
   padding: 0 $padding-x $padding-y $padding-x
   display: flex
@@ -38,3 +51,24 @@
       text-transform: uppercase
       color: $primaryColor
       margin-top: 0.4em
+  .pretzel-overlay
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    background: $primaryColor
+    pointer-events: none
+    animation: fade-out 3s
+    animation-fill-mode: forwards
+    animation-delay: 3s
+    &::before
+      content: ""
+      position: absolute
+      top: 0
+      left: 0
+      bottom: 0
+      right: 0
+      background: url("/img/pretzel.svg") no-repeat center center
+      background-size: 80%
+      animation: fade-in 3s
