@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { TurnDirection } from '../modules/MotionSource';
-import CurrentRateIndicator, { Country } from './CurrentRateIndicator';
+import CurrentRateIndicator, { countries, Country } from './CurrentRateIndicator';
 import Arrow from './Arrow';
 import Score from './Score';
 import { PageStates } from './main';
@@ -34,7 +34,15 @@ function makeImage() {
   );
 }
 
+const sortedCountries = countries.slice().sort((a, b) => {
+  return b.gdp - a.gdp;
+});
 export default (props: TProps) => {
+  const currentTurningRatio = (props.referenceRate || 0) / (props.currentTurnRate || 1);
+  const extrapolatedGdp = props.referenceCountry.gdp * currentTurningRatio;
+  const smallerThanCountries = sortedCountries.filter(c => c.gdp > extrapolatedGdp).pop();
+  const higherThanCountries = sortedCountries.filter(c => c.gdp <= extrapolatedGdp).shift();
+
   return (
     <div className="game-page">
       {props.currentTurnRate !== null && props.referenceRate
@@ -49,7 +57,9 @@ export default (props: TProps) => {
         {props.page === PageStates.RateGatheringPage
           ? getRateText(props.referenceCountry, props.currentTurnRate)
           : null}
-        {props.page === PageStates.GamePage ? getGameText() : null}
+        {props.page === PageStates.GamePage
+          ? getGameText(props.currentTurnRate, smallerThanCountries, higherThanCountries)
+          : null}
       </div>
       <div className="wrench-arrow">
         {props.currentTurnRate === null || props.currentTurnRate <= 15 ? makeArrow(props) : null}
@@ -85,8 +95,24 @@ const getRateText = (referenceCountry: Country, score: number | null) => {
     );
   }
 };
-const getGameText = () => {
+const getGameText = (score: number | null,
+                     nearestLowerCountry: Country | undefined,
+                     nearestUpperCountry: Country | undefined) => {
+
   return (
-    <div className="text-area"/>
+    <div className="text-area">
+      You've turned <b>{score || 0} nuts</b>.
+      <span>&nbsp;</span>
+      {nearestLowerCountry
+        ? <span>That's enough for a pretzel in <b>{nearestLowerCountry.name}</b></span>
+        : <span>That's not enough to make a pretzel in even the most developed countries.</span>
+      }
+      <span>&nbsp;</span>
+      {nearestUpperCountry
+        ? <span>If you turn a few more, you'll make enough for a snack in <b>{nearestUpperCountry.name}</b></span>
+        : <span>There's very few countries where that wouldn't buy you a snack!
+              You must be really tired by now, try clicking the big red button to finish the game.</span>
+      }
+    </div>
   );
 };
