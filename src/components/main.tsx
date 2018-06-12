@@ -12,6 +12,7 @@ type TState = {
   turnDirection: TurnDirection,
   turnProgress: number,
   currentTurnRate: number | null,
+  referenceTurnRate: number | null,
   currentPageState: PageStates;
 };
 
@@ -36,6 +37,7 @@ export default class Main extends Component<TProps, TState> {
       turnDirection: TurnDirection.Right,
       turnProgress: 0,
       currentTurnRate: null,
+      referenceTurnRate: null,
       currentPageState: PageStates.WelcomePage
     };
     this.turnEvents = [];
@@ -96,7 +98,11 @@ export default class Main extends Component<TProps, TState> {
   @bind
   onTurnDirectionChange(turnDirection: TurnDirection) {
     this.setState({turnDirection});
-    this.computeAverageTurningRate();
+    const averageRate = this.computeAverageTurningRate();
+    if (this.state.currentPageState === PageStates.RateGatheringPage && averageRate !== null) {
+      this.setState({referenceTurnRate: averageRate});
+      this.setNextPage();
+    }
   }
 
   private renderGamePage() {
@@ -120,13 +126,15 @@ export default class Main extends Component<TProps, TState> {
     return [PageStates.GamePage, PageStates.RateGatheringPage].includes(this.state.currentPageState);
   }
 
-  private computeAverageTurningRate() {
+  private computeAverageTurningRate(): number | null {
     this.turnEvents.push(Date.now());
     if (this.turnEvents.length > this.rollingAverageHalfTurnCount) {
       const relevantTimestamp = this.turnEvents[this.turnEvents.length - this.rollingAverageHalfTurnCount];
       const timeTaken = (Date.now() - relevantTimestamp) / 1000;
       const averageTime = this.rollingAverageHalfTurnCount / timeTaken;
       this.setState({currentTurnRate: averageTime});
+      return averageTime;
     }
+    return null;
   }
 }
