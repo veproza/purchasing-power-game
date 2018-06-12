@@ -15,13 +15,13 @@ export default ({referenceCountry, page, onNextClicked, onCountrySelected}: TPro
   switch (page) {
     case PageStates.WelcomePage:
       content = renderWelcome(referenceCountry, onCountrySelected);
-      nextButtonText = `Try some turnin‘!`;
+      nextButtonText = `Start turnin‘!`;
       break;
     case PageStates.DescriptionPage:
-      content = renderDescription();
+      content = renderDescription(referenceCountry);
       nextButtonText = `Let's see how hard it is...`;
       break;
-    case PageStates.RateGatheringPage:
+    case PageStates.PostGamePage:
       content = renderPostGame();
       nextButtonText = null;
       break;
@@ -49,12 +49,15 @@ let renderNextButton = function (onNextClicked: () => void, nextButtonText: stri
 const renderWelcome = (currentCountry: Country, onCountrySelected: (country: Country) => void) => {
   return (
     <div>
-      <h1>Welcome!</h1>
+      <h1>No pain, no&nbsp;gain?</h1>
       <p>
-        Bacon ipsum dolor amet corned beef meatball boudin frankfurter landjaeger.
-        Leberkas chuck turkey swine prosciutto. Pork chop pancetta tri-tip, short loin filet mignon venison burgdoggen.
-        Pork chop frankfurter swine sirloin jowl bacon. Bacon ribeye sirloin, chuck picanha biltong meatball pastrami
-        corned beef ham short loin ham hock.
+        The harder you work, the more money you make, right? Let’s give it a try.
+      </p>
+      <p>
+        Imagine the phone you are holding is a wrench and you are medium skilled construction worker.
+      </p>
+      <p>
+        Now, try to tighten some bolts by turning your phone like a wrench!
       </p>
       <b>
         Which country would you like to compare to?
@@ -79,22 +82,44 @@ const renderWelcome = (currentCountry: Country, onCountrySelected: (country: Cou
     </div>
   );
 };
-
-const renderDescription = () => {
+const renderDescription = (referenceCountry: Country) => {
   return (
     <div>
-      <h1>Description!</h1>
+      <h1>Good job!</h1>
       <p>
-        test test test test3 test3</p>
+        By turning the key 10 times, you just made <strong>1€</strong>.
+        You can buy a pretzel in {referenceCountry.name}!
+      </p>
+      <p>
+        To make the same amount of money in less developed parts of the world, you’d have to do more work.
+        Similarly, in more developed countries, you'd need to tighten fewer bolts.
+        Give it a try and see for yourself, how many more or less bolts does it take to get the same compensation.
+      </p>
     </div>
   );
 };
 const renderPostGame = () => {
+  // noinspection TsLint
   return (
     <div>
-      <h1>PostGame!</h1>
+      <h1>Take a rest. You've earned it!</h1>
       <p>
-        test test test test test4.</p>
+        This game uses real wage <a href="https://wageindicator.org/salary/wages-in-context">data from University of
+        Amsterdam</a>.
+      </p>
+      <p>
+        Economists and labour unions are worried about <strong>The Productivity Gap</strong>, or the dettachment of work
+        productivity from the financial compensation for workers.
+      </p>
+      <p>
+        Read about how severe it is in <a
+        href="https://ec.europa.eu/info/sites/info/files/economy-finance/dp079_en.pdf">Europe</a>, <a
+        href="https://feb.kuleuven.be/public/N07057/CV/vb11wd.pdf">Africa</a>, the <a
+        href="https://www.bls.gov/opub/btn/volume-6/pdf/understanding-the-labor-productivity-and-compensation-gap.pdf">United
+        States</a> and <a
+        href="http://www.ilo.org/wcmsp5/groups/public/@dgreports/@dcomm/@publ/documents/publication/wcms_537846.pdf"> all
+        over the world</a>.
+      </p>
     </div>
   );
 };
