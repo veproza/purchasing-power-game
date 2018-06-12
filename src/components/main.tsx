@@ -2,8 +2,7 @@ import { Component, h } from 'preact';
 import bind from 'bind-decorator';
 import EventHub from '../modules/EventHub';
 import { default as MotionSource, IMotionEvents, TurnDirection } from '../modules/MotionSource';
-import Arrow from './Arrow';
-import CurrentRateIndicator from './CurrentRateIndicator';
+import GameDisplay from './GameDisplay';
 
 type TProps = {
 
@@ -30,6 +29,10 @@ export default class Main extends Component<TProps, TState> {
   }
 
   componentDidMount() {
+    this.startListeningToTurns();
+  }
+
+  startListeningToTurns() {
     this.eventHub.subscribe('turnProgress', this.onTurnProgress);
     this.eventHub.subscribe('turnDirectionChange', this.onTurnDirectionChange);
   }
@@ -37,8 +40,10 @@ export default class Main extends Component<TProps, TState> {
   render() {
     return (
       <span>
-        {this.state.currentTurnRate ? <CurrentRateIndicator ratePerSecond={this.state.currentTurnRate}/> : null}
-        <Arrow direction={this.state.turnDirection}/>
+        <GameDisplay
+          turnDirection={this.state.turnDirection}
+          currentTurnRate={this.state.currentTurnRate}
+        />
       </span>
     );
   }
