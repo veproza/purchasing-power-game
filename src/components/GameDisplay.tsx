@@ -6,14 +6,18 @@ import Score from './Score';
 
 type TProps = {
   currentTurnRate: number | null;
-  turnDirection: TurnDirection
+  turnDirection: TurnDirection;
+  currentFillPercentage: number
 };
 export default (props: TProps) => {
   return (
     <div>
       {props.currentTurnRate ? <CurrentRateIndicator ratePerSecond={props.currentTurnRate}/> : null}
-        <Score currentScore={0} maximumScore={10} />
-        <Arrow direction={props.turnDirection}/>
+      <Score currentScore={0} maximumScore={10} />
+      <Arrow
+        direction={props.turnDirection}
+        fillPercentage={props.currentFillPercentage}
+      />
     </div>
   );
 };
