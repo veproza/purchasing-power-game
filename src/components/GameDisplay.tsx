@@ -8,12 +8,12 @@ type TProps = {
   currentTurnRate: number | null;
   referenceRate: number | null;
   turnDirection: TurnDirection;
-  currentFillPercentage: number
+  currentFillPercentage: number;
 };
 const referenceCountry = countries[1];
 export default (props: TProps) => {
   return (
-    <div>
+    <div className="game-page">
       {props.currentTurnRate && props.referenceRate
         ? <CurrentRateIndicator
           ratePerSecond={props.currentTurnRate}
@@ -26,7 +26,6 @@ export default (props: TProps) => {
         direction={props.turnDirection}
         fillPercentage={props.currentFillPercentage}
       />
-
     </div>
   );
 };

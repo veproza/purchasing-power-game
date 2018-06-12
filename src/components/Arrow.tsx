@@ -6,7 +6,7 @@ type TProps = {
   fillPercentage: number;
 };
 export default (props: TProps) => {
-  const className = ['flip-container'];
+  const className = ['arrow-container'];
   if (props.direction === TurnDirection.Left) {
     className.push('flip');
   }
