@@ -3,21 +3,7 @@ import { PageStates } from './main';
 
 type TProps = {
   page: PageStates;
-  onNextClicked: (selectedLanguage: string, activityChooser: string, scopeDefiner: string) => void;
-};
-
-// bekommt page und onNextClicked vom Type TProps
-export default ({page, onNextClicked}: TProps) => {
-  const content = page === PageStates.WelcomePage
-    ? renderWelcome(onNextClicked)
-    : page === PageStates.DescriptionPage
-      ? renderDescription()
-      : renderPostGame();
-  return (
-    <div className="page">
-      {content}
-    </div>
-  );
+  onNextClicked: () => void;
 };
 
 export const AvailableLanguages = [
@@ -26,18 +12,48 @@ export const AvailableLanguages = [
     'czech',
     'finnish'
 ];
-/*
-export const ActivityChooser = [
-  'doctor',
-  'programmer',
-  'Mcdonald worker',
-  'test'
-];
- */
 
 
-const renderWelcome = (onLanguageClicked: (language: string, activityChooser: string, scopeDefiner: string ) => void) => {
-  let Activity : HTMLSelectElement;
+export default ({page, onNextClicked}: TProps) => {
+  let content: JSX.Element;
+  let nextButtonText: string | null;
+  switch (page) {
+    case PageStates.WelcomePage:
+      content = renderWelcome(() => onNextClicked());
+      nextButtonText = `Try some turnin‘!`;
+      break;
+    case PageStates.DescriptionPage:
+      content = renderDescription();
+      nextButtonText = `Let's see how hard it is...`;
+      break;
+    case PageStates.RateGatheringPage:
+      content = renderPostGame();
+      nextButtonText = null;
+      break;
+    default:
+      throw new Error(`Unknown page: ${page}`);
+  }
+  return (
+    <div className="page">
+      <div className="content">
+        {content}
+      </div>
+      {nextButtonText ? renderNextButton(onNextClicked, nextButtonText) : null}
+    </div>
+  );
+};
+let renderNextButton = function (onNextClicked: () => void, nextButtonText: string) {
+  return (
+    <div className="bottom">
+      <button className="btn btn-primary btn-block" onClick={onNextClicked}>
+        {nextButtonText}
+      </button>
+    </div>
+  );
+};
+
+const renderWelcome = (onLanguageClicked: (language: string, activity: string, scope: string) => void) => {
+  let Activity: HTMLSelectElement;
   let Scope: HTMLSelectElement;
   return (
     <div>
