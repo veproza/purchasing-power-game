@@ -97,9 +97,11 @@ export default class Main extends Component<TProps, TState> {
   }
 
   @bind
-  onTurnDirectionChange(turnDirection: TurnDirection) {
+  onTurnDirectionChange(turnDirection: TurnDirection, forceIncrement: boolean = false) {
     this.setState({turnDirection});
-    const newTurnCount = (this.state.currentTurnScore || 0) + 1;
+    const newTurnCount = turnDirection === TurnDirection.Left || forceIncrement
+      ? (this.state.currentTurnScore || 0) + 1
+      : (this.state.currentTurnScore || 0);
     const isRateGatheringPage = this.state.currentPageState === PageStates.RateGatheringPage;
     const gatheredEnoughData = newTurnCount >= this.turnsForReferenceScreen;
     if (isRateGatheringPage && gatheredEnoughData) {
@@ -116,7 +118,7 @@ export default class Main extends Component<TProps, TState> {
     const newTurnDirection = this.state.turnDirection === TurnDirection.Left
       ? TurnDirection.Right
       : TurnDirection.Left;
-    this.onTurnDirectionChange(newTurnDirection);
+    this.onTurnDirectionChange(newTurnDirection, true);
   }
 
   @bind
