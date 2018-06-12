@@ -29,7 +29,7 @@ function makeImage() {
   // noinspection HtmlUnknownTarget
   return (
     <div className="wrench-container">
-      <img id="wrench" src="/img/wrenching.gif"/>
+      <img id="wrench" src="img/wrenching.gif"/>
     </div>
   );
 }
