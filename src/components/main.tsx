@@ -137,6 +137,7 @@ export default class Main extends Component<TProps, TState> {
         onSimulatedTurn={this.onSimulatedTurn}
         referenceCountry={this.state.referenceCountry}
         page={this.state.currentPageState}
+        onNextRequested={this.setNextPage}
       />);
   }
 

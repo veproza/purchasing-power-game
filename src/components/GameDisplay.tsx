@@ -13,6 +13,7 @@ type TProps = {
   onSimulatedTurn: () => void;
   referenceCountry: Country;
   page: PageStates;
+  onNextRequested: () => void;
 };
 
 function makeArrow(props: TProps) {
@@ -54,11 +55,18 @@ export default (props: TProps) => {
         {props.currentTurnRate === 0 ? makeImage() : null}
       </div>
       <div className="simulated-turn">
+        {props.currentTurnRate && props.currentTurnRate > 15 ? renderEndButton(props.onNextRequested) : null}
         <button className="btn btn-outline-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
       </div>
     </div>
   );
 };
+const renderEndButton = (onClick: () => void) => {
+  return (
+    <button className="btn btn-reverse btn-block" onClick={onClick}>I'm tired already!</button>
+  );
+};
+
 const getRateText = (referenceCountry: Country, score: number | null) => {
   const targetScore = 10;
   if (score && score > 1) {
