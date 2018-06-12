@@ -30,8 +30,8 @@ export default class Score extends Component<ScoreProps, ScoreState> {
         return scoreBoxes;
     }
 
-    componentWillReceiveProps(newProps: ScoreProps) {
-        this.setState({currentScore: newProps.currentScore});
+  componentDidMount() {
+    this.setState({currentScore: this.props.currentScore});
     }
 
     render() {
