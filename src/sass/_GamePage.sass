@@ -3,6 +3,8 @@
   display: flex
   flex-direction: column
   justify-content: space-between
+  padding: $padding-y $padding-x
+  background: $primaryColor
   .text-area
     flex-grow: 1
   .arrow-container
@@ -22,13 +24,13 @@
       transform: rotateY(0deg)
   .rate-indicator
     text-align: center
+    position: relative
     font-size: 60px
-    margin-top: 30px
     $flagSize: 40px
-    margin-left: $padding-x
-    margin-right: $padding-x
+    width: 100%
     border-radius: $flagSize
-    border: 1px solid $primaryColor
+    border: 1px dashed $primaryColor
+    background: white
     height: ($flagSize + 2px)
     .rate-indicator-inner
       position: absolute
@@ -36,13 +38,13 @@
       left: -1px
       right: ($flagSize - 1px)
     .flag
-      width: $flagSize
-      height: $flagSize
+      width: ($flagSize - 2px)
+      height: ($flagSize - 2px)
       border-radius: 50%
       overflow: hidden
       position: absolute
       transition: left 0.2s
-      border: 1px solid black
+      top: 1px
       img
         position: absolute
         top: 0
@@ -53,6 +55,11 @@
         max-width: $flagSize
         max-height: $flagSize
   .simulated-turn
-    padding: $padding-y $padding-x
     .btn
-      background: $primaryColor
+      margin-top: $padding-y
+      background: white
+      border-color: $primaryColor
+      color: $primaryColor
+      &:hover, &:active
+        background: rgba(255, 255, 255, 0.8)
+        color: $primaryColor

@@ -29,7 +29,7 @@ export default (props: TProps) => {
         fillPercentage={props.currentFillPercentage}
       />
       <div className="simulated-turn">
-        <button className="btn btn-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
+        <button className="btn btn-outline-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
       </div>
     </div>
   );
