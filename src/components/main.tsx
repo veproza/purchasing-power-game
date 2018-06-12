@@ -11,8 +11,8 @@ type TProps = {
 type TState = {
   turnDirection: TurnDirection,
   turnProgress: number,
-  currentTurnRate: number | null,
-  referenceTurnRate: number | null,
+  currentTurnScore: number | null,
+  referenceTurnScore: number | null,
   currentPageState: PageStates;
 };
 
@@ -26,9 +26,9 @@ export enum PageStates {
 }
 export default class Main extends Component<TProps, TState> {
   eventHub: EventHub<IMotionEvents>;
-  turnEvents: number[];
-  rollingAverageHalfTurnCount = 4;
+  turnCount: number;
   isListeningToTurns: boolean = false;
+  turnsForReferenceScreen = 4;
   constructor() {
     super();
     const motionSource = new MotionSource();
@@ -36,11 +36,11 @@ export default class Main extends Component<TProps, TState> {
     this.state = {
       turnDirection: TurnDirection.Right,
       turnProgress: 0,
-      currentTurnRate: null,
-      referenceTurnRate: null,
+      currentTurnScore: null,
+      referenceTurnScore: null,
       currentPageState: PageStates.WelcomePage
     };
-    this.turnEvents = [];
+    this.turnCount = 0;
   }
 
   componentDidMount() {
@@ -77,7 +77,7 @@ export default class Main extends Component<TProps, TState> {
   setNextPage() {
     if (!this.isGamePage()) {
       this.setState({
-        currentTurnRate: null,
+        currentTurnScore: null,
         turnProgress: 0
       });
       this.startListeningToTurns();
@@ -98,10 +98,15 @@ export default class Main extends Component<TProps, TState> {
   @bind
   onTurnDirectionChange(turnDirection: TurnDirection) {
     this.setState({turnDirection});
-    const averageRate = this.computeAverageTurningRate();
-    if (this.state.currentPageState === PageStates.RateGatheringPage && averageRate !== null) {
-      this.setState({referenceTurnRate: averageRate});
+    this.turnCount++;
+    const isRateGatheringPage = this.state.currentPageState === PageStates.RateGatheringPage;
+    const gatheredEnoughData = this.turnCount >= this.turnsForReferenceScreen;
+    if (isRateGatheringPage && gatheredEnoughData) {
+      this.setState({referenceTurnScore: this.turnCount, currentTurnScore: 0});
+      this.turnCount = 0;
       this.setNextPage();
+    } else {
+      this.setState({currentTurnScore: this.turnCount});
     }
   }
 
@@ -118,9 +123,9 @@ export default class Main extends Component<TProps, TState> {
     return (
       <GameDisplay
         turnDirection={this.state.turnDirection}
-        currentTurnRate={this.state.currentTurnRate}
+        currentTurnRate={this.state.currentTurnScore}
         currentFillPercentage={this.state.turnProgress}
-        referenceRate={this.state.referenceTurnRate}
+        referenceRate={this.state.referenceTurnScore}
         onSimulatedTurn={this.onSimulatedTurn}
       />);
   }
@@ -136,17 +141,5 @@ export default class Main extends Component<TProps, TState> {
 
   private isGamePage() {
     return [PageStates.GamePage, PageStates.RateGatheringPage].includes(this.state.currentPageState);
-  }
-
-  private computeAverageTurningRate(): number | null {
-    this.turnEvents.push(Date.now());
-    if (this.turnEvents.length > this.rollingAverageHalfTurnCount) {
-      const relevantTimestamp = this.turnEvents[this.turnEvents.length - this.rollingAverageHalfTurnCount];
-      const timeTaken = (Date.now() - relevantTimestamp) / 1000;
-      const averageTime = this.rollingAverageHalfTurnCount / timeTaken;
-      this.setState({currentTurnRate: averageTime});
-      return averageTime;
-    }
-    return null;
   }
 }
