@@ -1,25 +1,20 @@
 import { h } from 'preact';
 import { PageStates } from './main';
+import { countries, Country } from './CurrentRateIndicator';
 
 type TProps = {
   page: PageStates;
   onNextClicked: () => void;
+  onCountrySelected: (country: Country) => void;
+  referenceCountry: Country;
 };
-
-export const AvailableLanguages = [
-    'german',
-    'english',
-    'czech',
-    'finnish'
-];
-
-
-export default ({page, onNextClicked}: TProps) => {
+export const availableCountries = countries.filter(c => c.selectable);
+export default ({referenceCountry, page, onNextClicked, onCountrySelected}: TProps) => {
   let content: JSX.Element;
   let nextButtonText: string | null;
   switch (page) {
     case PageStates.WelcomePage:
-      content = renderWelcome(() => onNextClicked());
+      content = renderWelcome(referenceCountry, onCountrySelected);
       nextButtonText = `Try some turnin‘!`;
       break;
     case PageStates.DescriptionPage:
@@ -51,10 +46,7 @@ let renderNextButton = function (onNextClicked: () => void, nextButtonText: stri
     </div>
   );
 };
-
-const renderWelcome = (onLanguageClicked: (language: string, activity: string, scope: string) => void) => {
-  let Activity: HTMLSelectElement;
-  let Scope: HTMLSelectElement;
+const renderWelcome = (currentCountry: Country, onCountrySelected: (country: Country) => void) => {
   return (
     <div>
       <h1>Welcome!</h1>
@@ -62,34 +54,28 @@ const renderWelcome = (onLanguageClicked: (language: string, activity: string, s
         Bacon ipsum dolor amet corned beef meatball boudin frankfurter landjaeger.
         Leberkas chuck turkey swine prosciutto. Pork chop pancetta tri-tip, short loin filet mignon venison burgdoggen.
         Pork chop frankfurter swine sirloin jowl bacon. Bacon ribeye sirloin, chuck picanha biltong meatball pastrami
-        corned beef ham short loin ham hock.</p>
-        <h4>Choose a Activity</h4>
-
-        <select ref={(element) => Activity = element}>ActivityChooser
-            <option value="doctor">Doctor</option>
-            <option value="programmer">Programmer</option>
-            <option value="Mcdonald worker">Mcdonald worker</option>
-            <option value="test">Test</option>
-        </select>
-
-        <h4>What is your Scope</h4>
-
-        <select  ref={(element) => Scope = element}>ScopeDefiner
-            <option value="Car">Car</option>
-            <option value="Big Mac">Big Mac</option>
-            <option value="Test1">test1</option>
-            <option value="test2">Test2</option>
-        </select>
-
-        <h4>Choose a language!</h4>
-        {AvailableLanguages.map((language, index) => {
-            return (
-                <button key={index} onClick={() => onLanguageClicked(language, Activity.value, Scope.value)}>{language}
-                </button>
-            );
-
+        corned beef ham short loin ham hock.
+      </p>
+      <b>
+        Which country would you like to compare to?
+      </b>
+      <div className="country-selector">
+        {availableCountries.map((country, index) => {
+          const className = country === currentCountry ? 'active' : '';
+          return (
+            <button
+              className={className}
+              key={index}
+              onClick={() => onCountrySelected(country)}
+            >
+              <img src={country.flag} alt={country.name}/>
+              <span className="name">
+                  {country.name}
+                </span>
+            </button>
+          );
         })}
-
+      </div>
     </div>
   );
 };

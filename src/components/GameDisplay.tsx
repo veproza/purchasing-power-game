@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { TurnDirection } from '../modules/MotionSource';
-import CurrentRateIndicator, { countries } from './CurrentRateIndicator';
+import CurrentRateIndicator, { Country } from './CurrentRateIndicator';
 import Arrow from './Arrow';
 import Score from './Score';
 
@@ -10,8 +10,9 @@ type TProps = {
   turnDirection: TurnDirection;
   currentFillPercentage: number;
   onSimulatedTurn: () => void;
+  referenceCountry: Country;
 };
-const referenceCountry = countries[2];
+
 export default (props: TProps) => {
   return (
     <div className="game-page">
@@ -19,7 +20,7 @@ export default (props: TProps) => {
         ? <CurrentRateIndicator
           ratePerSecond={props.currentTurnRate}
           referenceRate={props.referenceRate}
-          referenceCountry={referenceCountry}
+          referenceCountry={props.referenceCountry}
         />
         : null}
       <Score currentScore={props.currentTurnRate || 0} maximumScore={10}/>

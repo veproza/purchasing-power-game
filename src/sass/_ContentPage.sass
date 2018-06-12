@@ -7,3 +7,27 @@
   justify-content: space-between
   .btn
     background: $primaryColor
+  .country-selector
+    text-align: center
+    margin-top: $padding-y
+    button
+      display: inline-block
+      position: relative
+      width: 40px
+      height: 40px
+      border-radius: 50%
+      border: 4px solid rgba($primaryColor, 0.2)
+      background: white
+      overflow: hidden
+      margin: 0 0.2em
+      img
+        position: absolute
+        top: 0
+        left: 50%
+        transform: translate(-50%, 0)
+        $dimension: (40 - 8px)
+        height: $dimension
+      span.name
+        display: none
+      &.active
+        border-color: $primaryColor

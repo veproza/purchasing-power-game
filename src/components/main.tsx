@@ -4,6 +4,7 @@ import EventHub from '../modules/EventHub';
 import { default as MotionSource, IMotionEvents, TurnDirection } from '../modules/MotionSource';
 import GameDisplay from './GameDisplay';
 import ContentPage from './ContentPage';
+import { countries, Country } from './CurrentRateIndicator';
 
 type TProps = {
 
@@ -13,7 +14,8 @@ type TState = {
   turnProgress: number,
   currentTurnScore: number | null,
   referenceTurnScore: number | null,
-  currentPageState: PageStates;
+  currentPageState: PageStates,
+  referenceCountry: Country
 };
 
 export enum PageStates {
@@ -38,7 +40,8 @@ export default class Main extends Component<TProps, TState> {
       turnProgress: 0,
       currentTurnScore: null,
       referenceTurnScore: null,
-      currentPageState: PageStates.WelcomePage
+      currentPageState: PageStates.WelcomePage,
+      referenceCountry: countries[0]
     };
     this.turnCount = 0;
   }
@@ -119,6 +122,11 @@ export default class Main extends Component<TProps, TState> {
     this.onTurnDirectionChange(newTurnDirection);
   }
 
+  @bind
+  onReferenceCountryChanged(country: Country) {
+    this.setState({referenceCountry: country});
+  }
+
   private renderGamePage() {
     return (
       <GameDisplay
@@ -127,6 +135,7 @@ export default class Main extends Component<TProps, TState> {
         currentFillPercentage={this.state.turnProgress}
         referenceRate={this.state.referenceTurnScore}
         onSimulatedTurn={this.onSimulatedTurn}
+        referenceCountry={this.state.referenceCountry}
       />);
   }
 
@@ -135,6 +144,8 @@ export default class Main extends Component<TProps, TState> {
       <ContentPage
         page={this.state.currentPageState}
         onNextClicked={this.setNextPage}
+        onCountrySelected={this.onReferenceCountryChanged}
+        referenceCountry={this.state.referenceCountry}
       />
     );
   }

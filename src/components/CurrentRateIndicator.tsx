@@ -1,26 +1,28 @@
 import { h } from 'preact';
 
-class Country {
+export class Country {
   name: string;
   flag: string;
   gdp: number;
+  selectable: boolean;
 
-  constructor(name: string, gdp: number, flag: string) {
+  constructor(name: string, gdp: number, flag: string, selectable: boolean = false) {
     this.name = name;
     this.flag = flag;
     this.gdp = gdp;
+    this.selectable = selectable;
   }
 }
 
 // noinspection TsLint
 export const countries: Country[] = [
+  new Country('Germany', 2455, 'https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/100px-Flag_of_Germany.svg.png', true),
+  new Country('United Kingdom', 1744, 'https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/100px-Flag_of_the_United_Kingdom.svg.png', true),
+  new Country('Czech Republic', 910, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_Czech_Republic.svg/100px-Flag_of_the_Czech_Republic.svg.png', true),
+  new Country('Finland', 2680, 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Finland.svg/100px-Flag_of_Finland.svg.png', true),
   new Country('Luxembourg', 2779, 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Luxembourg.svg/100px-Flag_of_Luxembourg.svg.png'),
   new Country('China', 92, 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/100px-Flag_of_the_People%27s_Republic_of_China.svg.png'),
-  new Country('Germany', 2455, 'https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/100px-Flag_of_Germany.svg.png'),
-  new Country('Czech Republic', 910, 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_Czech_Republic.svg/100px-Flag_of_the_Czech_Republic.svg.png'),
   new Country('United States', 2172, 'https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/100px-Flag_of_the_United_States.svg.png'),
-  new Country('United Kingdom', 1744, 'https://upload.wikimedia.org/wikipedia/en/thumb/a/ae/Flag_of_the_United_Kingdom.svg/100px-Flag_of_the_United_Kingdom.svg.png'),
-  new Country('Finland', 2680, 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Flag_of_Finland.svg/100px-Flag_of_Finland.svg.png'),
   new Country('Ukraine', 158, 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/100px-Flag_of_Ukraine.svg.png'),
   new Country('Nigeria', 109, 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/100px-Flag_of_Nigeria.svg.png'),
   new Country('Mexico', 392, 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/100px-Flag_of_Mexico.svg.png')
