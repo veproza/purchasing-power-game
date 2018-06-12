@@ -1,17 +1,25 @@
 import { h } from 'preact';
 import { TurnDirection } from '../modules/MotionSource';
-import CurrentRateIndicator from './CurrentRateIndicator';
+import CurrentRateIndicator, { countries } from './CurrentRateIndicator';
 import Arrow from './Arrow';
 
 type TProps = {
   currentTurnRate: number | null;
+  referenceRate: number | null;
   turnDirection: TurnDirection;
   currentFillPercentage: number
 };
+const referenceCountry = countries[1];
 export default (props: TProps) => {
   return (
     <div>
-      {props.currentTurnRate ? <CurrentRateIndicator ratePerSecond={props.currentTurnRate}/> : null}
+      {props.currentTurnRate && props.referenceRate
+        ? <CurrentRateIndicator
+          ratePerSecond={props.currentTurnRate}
+          referenceRate={props.referenceRate}
+          referenceCountry={referenceCountry}
+        />
+        : null}
       <Arrow
         direction={props.turnDirection}
         fillPercentage={props.currentFillPercentage}

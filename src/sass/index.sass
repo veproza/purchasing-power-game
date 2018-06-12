@@ -22,6 +22,22 @@ canvas
   text-align: center
   font-size: 60px
   position: absolute
-  top: 0
+  top: 30px
   left: 0
   right: 0
+  .flag
+    $flagSize: 40px
+    width: $flagSize
+    height: $flagSize
+    border-radius: 50%
+    overflow: hidden
+    position: absolute
+    transition: left 0.2s
+    transform: translate(-50%, 0)
+    img
+      position: absolute
+      top: 0
+      left: 50%
+      transform: translate(-50%, 0)
+      min-width: $flagSize
+      min-height: $flagSize
