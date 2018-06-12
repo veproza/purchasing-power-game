@@ -26,6 +26,7 @@ function makeArrow(props: TProps) {
 }
 
 function makeImage() {
+  // noinspection HtmlUnknownTarget
   return (
     <div className="wrench-container">
       <img id="wrench" src="/img/wrenching.gif"/>
@@ -51,7 +52,7 @@ export default (props: TProps) => {
         {props.page === PageStates.GamePage ? getGameText() : null}
       </div>
       <div className="wrench-arrow">
-        {makeArrow(props)}
+        {props.currentTurnRate === null || props.currentTurnRate <= 15 ? makeArrow(props) : null}
         {props.currentTurnRate === 0 ? makeImage() : null}
       </div>
       <div className="simulated-turn">
