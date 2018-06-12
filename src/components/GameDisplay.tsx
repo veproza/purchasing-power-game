@@ -3,6 +3,7 @@ import { TurnDirection } from '../modules/MotionSource';
 import CurrentRateIndicator, { Country } from './CurrentRateIndicator';
 import Arrow from './Arrow';
 import Score from './Score';
+import { PageStates } from './main';
 
 type TProps = {
   currentTurnRate: number | null;
@@ -11,6 +12,7 @@ type TProps = {
   currentFillPercentage: number;
   onSimulatedTurn: () => void;
   referenceCountry: Country;
+  page: PageStates;
 };
 
 export default (props: TProps) => {
@@ -24,7 +26,10 @@ export default (props: TProps) => {
         />
         : null}
       <Score currentScore={props.currentTurnRate || 0} maximumScore={10}/>
-      <div className="text-area"/>
+      <div className="text-area">
+        {props.page === PageStates.RateGatheringPage ? getRateText(props.referenceCountry) : null}
+        {props.page === PageStates.GamePage ? getGameText() : null}
+      </div>
       <Arrow
         direction={props.turnDirection}
         fillPercentage={props.currentFillPercentage}
@@ -33,5 +38,18 @@ export default (props: TProps) => {
         <button className="btn btn-outline-primary btn-block" onClick={props.onSimulatedTurn}>Work!</button>
       </div>
     </div>
+  );
+};
+const getRateText = (referenceCountry: Country) => {
+  return (
+    <div className="text-area">
+      Let's say that to earn enough to buy a pretzel in {referenceCountry.name}, you have to turn the wrench 10 times.
+      So start turning!
+    </div>
+  );
+};
+const getGameText = () => {
+  return (
+    <div className="text-area"/>
   );
 };

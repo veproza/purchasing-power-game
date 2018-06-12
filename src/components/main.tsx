@@ -37,9 +37,9 @@ export default class Main extends Component<TProps, TState> {
     this.state = {
       turnDirection: TurnDirection.Right,
       turnProgress: 0,
-      currentTurnScore: null,
+      currentTurnScore: 0,
       referenceTurnScore: null,
-      currentPageState: PageStates.WelcomePage,
+      currentPageState: PageStates.RateGatheringPage,
       referenceCountry: countries[0]
     };
   }
@@ -135,6 +135,7 @@ export default class Main extends Component<TProps, TState> {
         referenceRate={this.state.referenceTurnScore}
         onSimulatedTurn={this.onSimulatedTurn}
         referenceCountry={this.state.referenceCountry}
+        page={this.state.currentPageState}
       />);
   }
 
