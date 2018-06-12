@@ -22,21 +22,28 @@ canvas
     position: relative
     text-align: left
 .score-wrapper
-  display: flex
-  flex-flow: row
-  justify-content: center
-  margin: 10px auto
+  margin: $padding-y 0
+  line-height: 1em
 
 .score-box
+  display: inline-block
   height: 30px
   width: 30px
-  display: flex
   opacity: 0.1
-  background: url("/img/nut.svg")
+  background: url("/img/nut.svg") no-repeat
   background-size: cover
+  .score-2 &
+    height: 15px
+    width: 15px
+  .score-4 &
+    height: 7px
+    width: 7px
+  .score-8 &
+    height: 3px
+    width: 3px
 
 .scored
-  background: url("/img/nut.svg")
+  background: url("/img/nut.svg") no-repeat
   opacity: 1
   transition: opacity 500ms ease-in-out
 

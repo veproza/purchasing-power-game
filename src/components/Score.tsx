@@ -1,47 +1,42 @@
 import { Component, h } from 'preact';
 
 type ScoreState = {
-    currentScore: number;
+  currentScore: number;
 };
 type ScoreProps = {
   currentScore: number,
   maximumScore: number
 };
 export default class Score extends Component<ScoreProps, ScoreState> {
-
-    constructor() {
-        super();
-        this.state = {currentScore: 0};
+  addScoreBoxes() {
+    let scoreBoxes = [];
+    for (let i = 0; i < Math.max(this.props.maximumScore, this.props.currentScore); i++) {
+      if (i + 1 <= this.props.currentScore) {
+        scoreBoxes.push(<span className="score-box scored"/>);
+      } else {
+        scoreBoxes.push(<span className="score-box"/>);
+      }
     }
-
-    addScoreBoxes() {
-        let scoreBoxes = [];
-        if (this.state.currentScore >= this.props.maximumScore) {
-            scoreBoxes.push(<span className="score-winner">YOU WIN!</span>);
-            return scoreBoxes;
-        }
-        for (let i = 0; i < this.props.maximumScore; i++) {
-            if (i + 1 <= this.state.currentScore) {
-                scoreBoxes.push(<span className="score-box scored"/>);
-            } else {
-                scoreBoxes.push(<span className="score-box"/>);
-            }
-        }
-        return scoreBoxes;
-    }
+    return scoreBoxes;
+  }
 
   componentDidMount() {
     this.setState({currentScore: this.props.currentScore});
-    }
+  }
 
-    render() {
-        return (
-            <div>
-                <span>Your progress:</span>
-                <div class="score-wrapper">
-                    {this.addScoreBoxes()}
-                </div>
-            </div>
-        );
+  render() {
+    const classes = ['score-wrapper'];
+    if (this.props.currentScore > 80) {
+      classes.push('score-4');
+    } else if (this.props.currentScore > 20) {
+      classes.push('score-2');
     }
+    return (
+      <div>
+        <div className={classes.join(' ')}>
+          {this.addScoreBoxes()}
+        </div>
+      </div>
+    );
+  }
 }

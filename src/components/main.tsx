@@ -37,9 +37,9 @@ export default class Main extends Component<TProps, TState> {
     this.state = {
       turnDirection: TurnDirection.Right,
       turnProgress: 0,
-      currentTurnScore: 12,
-      referenceTurnScore: 10,
-      currentPageState: PageStates.GamePage,
+      currentTurnScore: null,
+      referenceTurnScore: null,
+      currentPageState: PageStates.WelcomePage,
       referenceCountry: countries[0]
     };
   }
@@ -78,7 +78,7 @@ export default class Main extends Component<TProps, TState> {
   setNextPage() {
     if (!this.isGamePage()) {
       this.setState({
-        currentTurnScore: null,
+        currentTurnScore: 0,
         turnProgress: 0
       });
       this.startListeningToTurns();
