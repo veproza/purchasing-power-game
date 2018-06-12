@@ -67,9 +67,9 @@ export default class Main extends Component<TProps, TState> {
 
   render() {
     return (
-      <span>
+      <div className="main">
         {this.isGamePage() ? this.renderGamePage() : this.renderContentPage()}
-      </span>
+      </div>
     );
   }
 
