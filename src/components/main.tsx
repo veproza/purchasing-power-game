@@ -111,6 +111,7 @@ export default class Main extends Component<TProps, TState> {
         turnDirection={this.state.turnDirection}
         currentTurnRate={this.state.currentTurnRate}
         currentFillPercentage={this.state.turnProgress}
+        referenceRate={this.state.referenceTurnRate}
       />);
   }
 
