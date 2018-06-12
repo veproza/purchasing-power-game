@@ -37,9 +37,9 @@ export default class Main extends Component<TProps, TState> {
     this.state = {
       turnDirection: TurnDirection.Right,
       turnProgress: 0,
-      currentTurnScore: 0,
+      currentTurnScore: null,
       referenceTurnScore: null,
-      currentPageState: PageStates.RateGatheringPage,
+      currentPageState: PageStates.WelcomePage,
       referenceCountry: countries[0]
     };
   }
