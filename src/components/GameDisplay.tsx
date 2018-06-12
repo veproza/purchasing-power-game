@@ -11,7 +11,7 @@ type TProps = {
   currentFillPercentage: number;
   onSimulatedTurn: () => void;
 };
-const referenceCountry = countries[1];
+const referenceCountry = countries[2];
 export default (props: TProps) => {
   return (
     <div className="game-page">

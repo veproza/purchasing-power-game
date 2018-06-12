@@ -28,7 +28,7 @@ export default class Main extends Component<TProps, TState> {
   eventHub: EventHub<IMotionEvents>;
   turnCount: number;
   isListeningToTurns: boolean = false;
-  turnsForReferenceScreen = 4;
+  turnsForReferenceScreen = 10;
   constructor() {
     super();
     const motionSource = new MotionSource();
