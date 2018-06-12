@@ -5,13 +5,17 @@ import Arrow from './Arrow';
 
 type TProps = {
   currentTurnRate: number | null;
-  turnDirection: TurnDirection
+  turnDirection: TurnDirection;
+  currentFillPercentage: number
 };
 export default (props: TProps) => {
   return (
     <div>
       {props.currentTurnRate ? <CurrentRateIndicator ratePerSecond={props.currentTurnRate}/> : null}
-      <Arrow direction={props.turnDirection}/>
+      <Arrow
+        direction={props.turnDirection}
+        fillPercentage={props.currentFillPercentage}
+      />
     </div>
   );
 };

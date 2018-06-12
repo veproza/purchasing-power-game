@@ -92,7 +92,7 @@ export default class Main extends Component<TProps, TState> {
 
   @bind
   onTurnProgress(progress: number) {
-    this.setState({turnProgress: Math.round(progress * 100)});
+    this.setState({turnProgress: progress});
   }
 
   @bind
@@ -110,6 +110,7 @@ export default class Main extends Component<TProps, TState> {
       <GameDisplay
         turnDirection={this.state.turnDirection}
         currentTurnRate={this.state.currentTurnRate}
+        currentFillPercentage={this.state.turnProgress}
       />);
   }
 
