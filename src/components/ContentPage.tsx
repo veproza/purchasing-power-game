@@ -140,6 +140,9 @@ const renderPostGame = () => {
         Made on DW hackathon by Milan Burgmann and Okay Suna from Deutche Welle and Petr Kočí and Marcel Šulek from
         Czech Radio.
       </p>
+      <p className="text-muted small">
+        <a target="_blank" href="https://github.com/veproza/purchasing-power-game">Fork the app on GitHub</a>
+      </p>
     </div>
   );
 };
