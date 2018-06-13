@@ -16,5 +16,5 @@ yarn-error.log*
 !/public/perms.json
 !/public/img
 !/public/img/*
-
+Template_Pitch.ppt
 /coverage
