@@ -129,6 +129,17 @@ const renderPostGame = () => {
         href="http://www.ilo.org/wcmsp5/groups/public/@dgreports/@dcomm/@publ/documents/publication/wcms_537846.pdf"> all
         over the world</a>.
       </p>
+      <div className="share-buttons">
+        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fzdat.cz%2Fpain"
+           className="btn btn-primary btn-facebook btn-block">Share on Facebook</a>
+        <a target="_blank" href="https://twitter.com/home?status=https%3A%2F%2Fzdat.cz%2Fpain"
+           className="btn btn-primary btn-twitter btn-block">Share on Twitter</a>
+      </div>
+      <hr/>
+      <p className="text-muted small">
+        Made on DW hackathon by Milan Burgmann and Okay Suna from Deutche Welle and Petr Kočí and Marcel Šulek from
+        Czech Radio.
+      </p>
     </div>
   );
 };
