@@ -54,7 +54,7 @@ const renderWelcome = (currentCountry: Country, onCountrySelected: (country: Cou
         The harder you work, the more money you make, right? Let’s give it a try.
       </p>
       <p>
-        Imagine the phone you are holding is a wrench and you are medium skilled construction worker.
+        Imagine the phone you are holding is a wrench and you are <em>medium skilled</em> assembly line worker.
       </p>
       <p>
         <img id="phone" src="img/phonewrench.png"/>
@@ -96,7 +96,7 @@ const renderDescription = (referenceCountry: Country) => {
       <div className="pretzel-overlay"/>
       <h1>Good job!</h1>
       <p>
-        By turning the key 10 times, you just made <strong>1€</strong>.
+        By turning the wrench 10 times, you just made <strong>1€</strong>.
         You can buy a pretzel in {referenceCountry.name}!
       </p>
       <p>
@@ -114,7 +114,7 @@ const renderPostGame = () => {
       <h1>Take a rest. You've earned it!</h1>
       <p>
         This game uses real wage <a href="https://wageindicator.org/salary/wages-in-context">data from University of
-        Amsterdam</a>.
+        Amsterdam</a> adjusted for purchasing power parity, so they are directly comparable.
       </p>
       <p>
         Economists and labour unions are worried about <strong>The Productivity Gap</strong>, or the dettachment of work
